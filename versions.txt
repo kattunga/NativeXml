@@ -1,0 +1,329 @@
+This file contains a list of all bugfixes, additions and enhancements to NativeXml.
+
+Maintained by Nils Haeck (SimDesign BV)
+
+! = bugfix
+* = enhancement
++ = addition
+
+Version 4.07 (03oct2012)
+! Improved canonicalization (c14n), now works recursively and
+  returns # expanded entities
+! Fixed up a rangecheck warning in sdUtf8ToWideBuffer
+! cleaned up some compiler directives
+
+Version 4.06 (16aug2012)
++ Added TXmlNode.NodeRemoveEx (allows removal of the line with
+  the node instead of just the node itself) - experimental
+
+Version 4.05 (11aug2012)
+! Reimplemented/Fixed sdNormaliseEol function
++ Readded (hex) character replacement
+
+Version 4.04 (06aug2012)
+! Updated simdesign.inc to add DXE2
+! Fixed bug in DirectNodeCount
+! Fixed (removed) erratic un-normalisation
+! removed erratic $ifdef in NativeXmlObjectStorage.pas
+
+Version 4.03 (13jul2012)
+* Core End-Of-Line style is LF, defaults CR-LF, LF and CR for Windows, Linux, Mac
+  respectively
+! Fixed EOL bug in source (thx Christian)
+* TsdChardata.GetCoreValue and .GetPlatformValue
+
+Version 4.02 (05nov2011)
+* default end-of-line style now esCRLF (uses CR-LF combination by default for Windows)
++ form storage in editor (both default and XE versions) uses NativeXml itself :)
++ added support for EolStyle = esCR (for use with the Mac)
++ added separator when writing declaration, skip separator when parsing declaration
+! fixed problems in binary xml. Consequence: New binary xml version v2. 
+* NativeXml (and binary xml) now supports xml-stylesheet correctly
+* binary xml now supports doctype correctly
+* fixed attribute processing in NativeXmlStorage.pas (thanks RKS)
+
+Version 4.01 (27jul2011)
++ added binary xml to the TNativeXml class itself
++ added methods BinaryMethod and AesKeyHex
+* improved FixStructuralErrors.. NativeXml can now load html usually
+* improved method sdUnNormalizeEol (faster now)
+! fixed property handlers for ExternalEncoding and ExternalCodepage
++ updated DtpEditor XE
+
+Version 4.00 (23jul2011)
++ implemented binary xml (BXM)
++ added ValueAsDate and ValueAsTime besides ValueAsDateTime
++ added SplitSecondDigits parameter (default = 0)
+* constructor CreateParentNear instead of CreateParentBefore/After
+  to avoid clash with CppBuilder
++ added zlib compression and AES encryption for BXM in the demo
+
+Version 3.32 (07jul2011)
+! re-added D5 compatibility
+! fixed TNativeXml.New method
+
+Version 3.31 (29jun2011)
+! fixed string table (part of lowlevel string processing of NativeXml)
+* integrated End-Of-Line normalisation in the XML parser
+* placed NativeXmlC14N.pas in NativeXml.pas, TNativeXml.Canonicalize integrated
+
+Version 3.30 (20may2011)
+* reimplemented DropCommentsOnParse
+* reimplemented AttributesClear
++ added property Charset
+! reworked write FExternalEncoding
+* readded EncodeBinHex / DecodeBinHex
++ sdNodeList with default Create
+* alphabetized NativeXml bool options
++ Linux: allow many codepage conversions, using NativeXmlWin32Compat.pas (largely untested tho)
+* added class methods TNativeXml.EncodeBase64 / DecodeBase64 next to the
+  global base64 coding methods.
+! corrected ranges of arrays in the coders, so rangechecking does not need to be disabled
+* slightly more verbose error messages (line + pos instead of just pos)
+
+Version 3.29 (01apr2011)
+! fixed last part of the file processing (final chunk) so NormalizeEOL works
+  correctly now
+! fix: changed boolean value strings 'True' and 'False' to 'true' and 'false'
+  according to W3 spec
++ Added some helper functions for Linux (still experimental), this does not affect
+  Win32
+* Joined TsdBufferParser and TsdXmlParser (now just TsdXmlParser)
+* Updated OnProgress and added progress bar in XmlEditor
+
+Version 3.28 (21mar2011)
++ Re-added NodeNewAtIndex
+* Verified and fixed demos
+
+Version 3.27 (19mar2011)
+! fixed Delphi XE-related bug in sdEscapeString
++ Re-added method NodesClear 
++ Re-added methods ValueUnicode, AttributeValueByNameWide, IndexInParent, SortChildNodes
++ made AttributeIndexByName public
++ Re-added constructors TXmlNode.CreateName, CreateNameValue
+
+Version 3.26 (16mar2011)
+* TCustomXml and TNativeXml joined
++ Added property TXmlNode.Document (type TNativeXml)
++ Added ReadUnicodeString / WriteUnicodeString
+* Made NodeFindOrCreate public
+! Fixed FWriteOnDefault
++ Added ReadAttributeBool, ReadAttributeString, ReadUnicodeString and WriteUnicodeString
+
+Version 3.25 (03mar2011)
+* enhanced function sdEscapeString (contributor: Michael Cessna)
+! Fixed function sdReplaceString (new implementation)
++ Added Test16 to verify sdEscapeString and sdReplaceString
+
+Version 3.24 (24feb2011)
++ Added function TCustomXml.InsertDocType to hide the complexity of
+  inserting a TsdDocType manually
+! fixed small leak in class TsdDocType
++ Added Test15 to diagnose TCustomXml.InsertDocType
+! fixed major bug where parser does not use ansi + 65001 codepage but really utf8, so
+  the writer also uses utf8 (and added Test14 to check)
+* Added speed comparison between old TNativeXml and new TNativeXml: new 
+  TNativeXml is ca 3 times faster than old.
++ TNativeXmlObjectStorage: Added storage of TCollectionItem and removed some
+  "with" statements and replaced some raise statements by DoDebugOut
+* Tested successfully with D5, D7 and DXE 
+
+Version 3.23 (13feb2011)
+* Reimplemented TXmlNode.IsEqualTo
++ Added Test12 (to check IsEqualTo)
++ Added D5 compatibility (through sdDebug.pas)
++ Option "FixStructuralErrors" is functional:
+  With this option you can fix the structure in HTML 
+  files (eg a <meta> tag without closing tag).
+
+Version 3.22 (08feb2011)
+! fixed accidental switch of TCustomXml(FOwner).DoNodeLoaded/DoNodeNew;
+! fixed attribute handling of values (added sdReplaceString)
++ Added UTF16BE support in SaveToStream
+! Renamed WriteToString/WideString to WriteToLocalString/Widestring for
+  Utf8 and Utf16, and added generic WriteToString for "string" type
++ Added readonly property TXmlNode.DirectNodeCount
++ Added properties TXmlNode.ChildContainers[i] and TXmlNode.ChildContainerCount
++ Added Test5, Test6 and Test7 functions in XmlTest demo app
+* placed sdStringEncoding and sdBufferParser in NativeXml (no longer needs separate units)
++ Minor improvements in writing xml elements with XmlFormat := xfReadable
+
+Version 3.21 (04feb2011)
+! Re-added sdStringToDateTime functions instead of non-functional StrToDateTime
+! Fixed function sdNormaliseEOL
++ Re-added TXmlNode.Delete
++ Added Test3 and Test4 functions in XmlTest demo app
+
+Version 3.20 (31jan2011)
+* Combined NativeXmlEx, NativeXmlNodes, NativeXmlParser and NativeXmlUtils into one new unit NativeXml
+- Removed old NativeXml
++ Added WriteToString method for the TXmlNode classes
++ Added Assign and CopyFrom methods for the TXmlNode classes
++ Added a few methods from the old NativeXml (e.g. DeleteEmptyNodes)
+* sdStreams no longer needs sdStreamsPlatform
+* Generalized include files
+
+Version 3.14 (24jan2011)
++ Added LINQ-like methods and example (contributor: Marius Z)
++ Reimplemented ValueAsXYZ methods in NativeXmlEx
+* Added and enhanced XmlFormat = xfPreserve
++ Verified successful working in both D7 and DXE
+
+Version 3.13 (16jan2011)
++ NativeXmlObjectStorage now works with NativeXmlEx
+* Many improvements in the writer (NativeXmlNodes)
+! Fixed Utf8 to Ansi (sdStringEncoding)
+* Dual version of XmlEditorEx demo for D7 and DXE by use of {$ifdef}'s
+
+Version 3.12 (31dec2010)
++ Experimental unit NativeXmlC14n.pas (for canonicalization)
+! Many bugfixes in NativeXmlEx parser
++ normalize end-of-line
+* NativeXmlEx html online docu
+* XmlEditorEx demo with versions for Delphi7 and DelphiXE 
+
+Version 3.11 (28nov2010)
++ Implemented NativeXmlEx: 
+    NativeXmlEx.pas (TCustomXmlEx and TNativeXmlEx components)
+    NativeXmlNodes.pas (TXmlNode and descendant nodes like TsdAttribute and TsdElement)
+    NativeXmlUtils.pas (lowlevel types and consts of nativexml, codepage constants, low-level 
+      string handling functions)
+    NativeXmlParser.pas (TsdXmlParser and TsdXmlWriter components)
+    sdStringTable.pas in /general
+    sdStringEncoding.pas in /general
+    sdStreams.pas in /general
+    sdStreamsPlatform.pas in /general
+    sdBufferParser.pas in /general
+    sdDebug.pas in /general
+    sdSortedLists.pas in /general 
+! fixed WriteAttributeInt64 and WriteInt64 (NativeXml.pas)
+
+Version 3.10 (21sep2010)
+! fixed local bias in datetime processing (contributor Stefan Glienke)
+! XML without encoding should be UTF-8
+! default values In ReadAttributeXXX when empty strings instead of exceptions
+! Allow multiple defined properties
+! fixed bug in varCurrency values when reading variants
+! No info stored in stream in procedure ObjectSaveToXmlXXXX
+! Problem with saving/reading collections (contributor Adam Siwon)
+
+Version 3.09 (21jul2010)
+! allow "utf-8" as well as "UTF-8" as encodingstring (NativeXml.pas)
+! trim string values in normal elements (NativeXml.pas hack)
+! RawByteString instead of UTF8String in TsdXmlObjectWriter (NativeXmlObjectStorage)
++ exception 'Unregistered classtype encountered in nodename' instead of general exception
+  (NativeXmlObjectStorage)
+! Local bias (daylightsaving) and time zone designator in date/time conversion (contributor
+  Stefan Glienke)
+
+Version 3.08 (25jun2010)
+! do not write BOM when encoding="UTF-8"
+
+Version 3.07 (10Mar2010)
+! fixed TXmlNode.SetValueAsInt64
+
+Version 3.06 (03Feb2010)
+* Added compiler directives for NativeXmlStorage.pas
+! Fixed "implicit string conversion" warnings in examples
+
+Version 3.05 (19Dec2009)
+* Added some compiler directives for D2009/D2010
+
+Version 3.04  (28Nov2009)
+* Changed license of NativeXml to very liberal and comprehensible BSD-Style Open-Source
+
+Version 3.03
+! Added {$ELSE} directive and declarations for UnicodeChar and PUnicodeChar
+
+Version 3.02
+! Bugfix in attribute value code
+
+Version 3.00 (20Sep2009)
+* Made compatible with D2009 and its convention that string is unicode (2bytes/char)
+
+Version 2.39
+* Replaced all widestring by WideString (conform to case used in Delphi)
+
+Version 2.38 (07March2008)
++ Added TXmlNode.ReadAttributeDateTime
++ Added TXmlNode.WriteAttributeDateTime
++ Support for D2007-NET (version 190)
+! ReadFromStream now first clears subnodes
+
+Version 2.37 (18Dec2007)
++ Added ByAttribute function to TXmlNodeList
+! Fixed problem with NodeAdd from another tree (Document reference gets updated now)
+! Fixed deletion of empty attributes
+
+Version 2.36 (11Nov2007)
+! Do not save empty encoding (e.g. encoding="").
+* Renamed some local variables
+* Code re-formatted
+
+Version 2.35 (17Aug2007)
+* Bugfix in sdWriteNumber
+
+Version 2.34 (31May2007)
++ Added WriteAttributeInt64
+! Made check for UTF-8 case insensitive
+* Fixed bug with stringtable (removed "gaps")
++ Added AttributeValueDirect prop
+
+Version 2.31 (03May2007)
+* Verified compatibility with Delphi2 and 3 
+* Fixed 2 harmless compiler warnings 
+
+Version 2.30 (30Apr2007)
++ Added stringbuilder class for faster creation of strings. This should make NativeXml parse documents with large value strings faster. 
++ Patches to allow compilation under freepascal 
+! Fixed bug with ' and " inside quotes (now "bla'bla'bla" is allowed) 
+* ReadAttributeBool/WriteAttributeBool allow empty elements 
+* Made changes to assure NativeXml works well with "boolean evaluation" compile flag on 
+! Fixed bug in WriteWidestrProp 
+! Fixed bug in SetValueAsFloat 
+! Fixed bug in SetAttributeByNameWide 
+
+Version 2.26 (05Dec2006)
++ Added ReadAttributeInt64 property 
+! Fixed bugs with StrToInt which should be StrToInt64. 
+! Fixed bug with tag parsing where tags like "bla>bla" caused the parser to stop on the ">". 
+
+Version 2.23 (02Dec2005)
+! Fixed bug in entity resolving for attributes 
+! Bugfix: Take into account default value in WriteAttributeString/-Integer 
+! Bugfix: Never write empty attributes to the XML file 
++ Added TotalNodeCount property 
+* Removed TNativeXml.StyleSheetString, replaced by TNativeXml.StyleSheetNode 
+* WriteFloat now uses proprietary routine (threadsafe), always using a dot as decimal separator and settings from NativeXml.FloatSignificantDigits and FloatAllowScientific 
+
+Version 2.20 (19Sep2005)
++ Added SortAttributes property 
++ Added ParserWarnings property 
+* Added RootNodeList property, to allow easier access to XML nodes in the header, and removed ExtraNodes and Comments properties. 
++ Added TXmlNode.IsEqualTo function to compare nodes in documents 
+! Fixed bug in FullPath property (one slash too much at start) 
+* FindNodes can now also be used with full paths 
+! Bugfix: no longer adds CRLF after ENTITY declarations 
+! Bugfix: AttributeName[] setter now no longer strips quotes from attribute value. 
++ Added AttributeValueAsWidestring[] property 
++ Added AttributeValueAsInteger[] property 
+
+Version 2.13 (25Jul2005)
+! Fixed bug with begin-tag reading (only seldom, with <?..?> nodes) 
+
+Version 2.12 (25Jul2005)
+* Changed order of DoNodeLoaded and DoProgress, to avoid bug when freeing in OnNodeLoaded. 
++ Added SortAttributes property 
++ Added ParserWarnings property 
+* Added RootNodeList property, to allow easier access to XML nodes in the header 
+- Removed ExtraNodes and Comments properties 
+* Changed Assign methods (faster now) 
++ Added function TXmlNode.NodeByElementType 
++ Added boolean property TNativeXml.AbortParsing 
+! Fixed bug with end-tag reading (when reading CDATA sections with \"]\" in the data string) 
+
+
+<snip: many versions before this>
+
+Version 1.00 (01Apr2003)
+- Initial release

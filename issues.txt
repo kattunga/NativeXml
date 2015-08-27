@@ -1,0 +1,102 @@
+Open issues
+===========
+16jan2011 feat
+Add INF and -INF in the string <-> float conversions
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1310
+status: open
+
+Closed issues
+=============
+17jun2011 feat
+reporter: N. Haeck
+XmlParser.NormaliseEOL and function sdNormalizeEOL should be avoided, and 
+instead the Read???chunk functions in the parser should be used for EOL 
+normalisation.
+status: fixed
+
+23mar2011 bug
+WriteBool gives incorrect result
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1656&p=7137#p7137
+status: fixed
+
+22mar2011 feat
+remove const for Builder support
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1650
+status: fixed
+
+15mar2011 feat
+Add methods ReadWideString and WriteWideString
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1621&p=7069#p7069
+status: added in 3.26
+
+01feb2011 bug
+multi-line nodes get penultimate character doubled
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1452
+status: fixed in 3.21
+
+17jan2011 feat
+Implement properties TXmlNode.ValueAsXYZ
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1346
+status: completed
+
+17jan2011 bug
+Node.Value must be given in the correct locale (eg Windows/Linux) and
+thus EndOfLines inside the trimmed value must be corrected for it
+status: fixed 
+
+26sep2010 bug
+Possible bug in Utf8Pos function
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1278&p=6425#p6425
+status: no longer used in NativeXmlEx
+
+01dec2010 question
+difference between nativexml and indy concerning base64 encoding/decoding
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1311&p=6502#p6502
+status: no change required
+
+23jul2010 bug
+WriteAttributeInt64 and WriteInt64 are wrong
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1175
+status: fixed in 3.11
+
+21sep2010 bug
+No info stored in stream in procedure ObjectSaveToXmlXXXX
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1265&p=6394#p6394
+status: fixed in 3.10
+
+24aug2010 bug
+XML without encoding should be UTF-8
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1255
+status: fixed in 3.10
+
+04aug2010 bug
+bug in Local bias (daylightsaving) and time zone designator in date/time conversion 
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1177
+status: fixed in 3.10
+
+24jul2010 feat
+change behaviour of all default values (exit instead of exceptions)
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1174
+status: fixed in 3.10
+
+08jul2010 bug
+Allow multiple defined properties
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1163&p=6338#p6338
+status: fixed in 3.10
+
+07jul2010 bug
+ValueAsString delivers format chars
+http://www.simdesign.nl/forum/viewtopic.php?f=12&t=1160
+status: requires feedback
+
+11may2010 bug
+Bug in varCurrency values when reading variants
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1137
+status: fixed in 3.10
+
+01may2010 bug
+Bug in variant type when component loading
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1131
+http://www.simdesign.nl/forum/viewtopic.php?f=2&t=1132
+status: fixed in 3.10
+

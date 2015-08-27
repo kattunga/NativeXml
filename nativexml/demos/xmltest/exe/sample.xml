@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<root>
+  <name>John Doe</name>
+  <line2>  John Doe
+senoir developer
+  </line2>
+  <name2 job="senior developer"
+         age="  42  ">John Doe</name2>
+  
+  <name3 name="  John Doe  " job="senior developer"/>
+  <condition><![CDATA[age >= 42]]></condition>
+  <name4>John Doe
+    <sub1 v="bla1"/>
+    <sub2 v="bla2"/>
+  </name4>
+</root>

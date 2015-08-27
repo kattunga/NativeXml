@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--a comment here-->
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+<!--And another comment-->
+<![CDATA[This is a part that is inside a CDATA section, it can contain <, > and &!]]>
+</note>

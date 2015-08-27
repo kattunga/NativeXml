@@ -1,0 +1,144 @@
+AES Implementation (Brief Manual)
+
+							Introduction
+
+AES  (Advanced  Encryption Standard) defines a method to encrypt/decrypt
+the  data  using  blocks  of  128 bits length and keys of various length
+(128, 192 or 256 bit).
+
+This implementation of AES provides routines to allow you to use keys of
+any  mentioned  length. Also this unit contains routines which allow you
+to  encrypt/decrypt  a  data  stream of any length using ECB (Electronic
+CodeBook) or CBC (Cipher Block Chaining) modes.
+
+This unit can be compiled with Delphi 4 or later, C++ Builder 4 or later
+or Kylix 1 or later.
+
+							Block Encryption
+
+To encrypt your data just do the following steps:
+
+1. Choose a key length you will use to encrypt/decrypt the data.
+
+2.    Call     the   ExpandAESKeyForEncryption  routine  to get expanded
+subkeys   to    be   used   by  encryption  routine.  This  procedure is
+available  separately  to  speed-up   entire the proccess if you need to
+encrypt several blocks of data using the same key.
+
+3. Call EncryptAES procedure to encrypt a block of data.
+
+Example:
+
+procedure Encrypt(var Buffer: TAESBuffer; Key: TAESKey128);
+var
+  TempBuf: TAESBuffer;
+  ExpandedKey: TAESExpandedKey128;
+begin
+  ExpandAESKeyForEncryption(Key, ExpandedKey);
+  EncryptAES(Buffer, ExpandedKey, TempBuf);
+  Move(TempBuf, Buffer, SizeOf(Buffer));
+end;
+
+Block Decryption
+
+To decrypt your ciphered data perform the following steps:
+
+1.   If   you   already   have   an   expanded   key   produced   by  an
+ExpandAESKeyForEncryption      routine,     you     can     call     the
+ExpandAESKeyForDecryption  to  produce  the  corresponding  subkeys  for
+decryption  routine.  If  you  don't  have an expanded key generated for
+encryption     procedure,     you     call     another     version    of
+ExpandAESKeyForDecryption   which   creates  an  expanded  key first and
+after that transforms it into a key required by decryption routine.
+
+2. Call the DecryptAES procedure to decrypt a block of data.
+
+Example:
+
+procedure Decrypt(var Buffer: TAESBuffer; Key: TAESKey128);
+var
+  TempBuf: TAESBuffer;
+  ExpandedKey: TAESExpandedKey128;
+begin
+  ExpandAESKeyForDecryption(Key, ExpandedKey);
+  DecryptAES(Buffer, ExpandedKey, TempBuf);
+  Move(TempBuf, Buffer, SizeOf(Buffer));
+end;
+
+							Stream Processing	
+
+The unit provides a number of routines to encrypt or decrypt a stream of
+data using ECB and CBC modes. These routines divide a source stream into
+blocks  of  128  bits  each  and then encrypt/decrypt those blocks using
+block  encryption/decryption  routines.  If the final block is less then
+128  bits  in size, it will be padded with zeros. If an input stream was
+padded  with  several  zero  bytes  when it has been encrypted, you will
+receive  these  zero  bytes in output stream after you decrypt the data.
+So,   it's   very   important   to  restore  the original size of source
+stream after decryption of such block.
+
+When  the  stream  is  encrypted  in  ECB  mode,  the 128-bit blocks are
+encrypted independently of each other.
+
+CBC  mode  applies  XOR  operation  on  blocks  being  encrypted  in the
+following way: first block is XOR-ed with initialization vector and then
+encrypted.  The  second block is XOR-ed with result of encryption of the
+first  block,  third  block  is  XOR-ed with result of encryption of the
+second block and so on. To decrypt such stream the receiving party must 
+have both key and initialization vector.
+
+Stream Encryption
+
+To encrypt a stream of data do the following steps:
+
+1. Choose a key length you will use to encrypt/decrypt the data.
+
+2. Choose a method of stream processing (ECB or CBC).
+
+3. Call the ExpandAESKeyForEncryption routine to get expanded subkeys to
+be    used    by   encryption   routine.  This   procedure  is available
+separately   to   speed-up    entire  the proccess if you need to ncrypt
+several streams of data using the same key. If you need to eencrypt only
+one stream, you can skip this step.
+
+4.   Call   EncryptAESStreamXXX  routine  (where  XXX means the required
+stream processing mode).
+
+Example:
+
+procedure EncryptStream(Source: TStream; Dest: TStream; Key: TAESKey128);
+var
+  Count: integer;
+begin
+  Source.Position := 0;
+  Count := Source.Size;
+  Dest.Write(Count, SizeOf(Count));  // store the source stream size to 
+                                     // restore after decryption
+  EncryptAESStreamECB(Source, 0, Key, Dest);
+end;
+
+Stream Decryption
+
+To decrypt a stream of data do the following steps:
+1.  Call  the  ExpandAESKeyForDecryption routine to get expanded keys to
+be   used by decryption routine. If you need to process only one stream,
+you can skip this step.
+2.  Call the EncryptAESStreamXXX routine (where XXX means the mode which
+was used to encrypt the data).
+
+Example:
+
+procedure DecryptStream(Source: TStream; Dest: TStream; Key: TAESKey128);
+var
+  Count: integer;
+  DPos: integer;
+begin
+  Source.Position := 0;
+  DPos := Dest.Position;
+  Source.ReadBuffer(Count, SizeOf(Count));  // read original size of data 
+                                            // stream
+  DecryptAESStreamECB(Source, Source.Size - Source.Position, Key, Dest);
+  Dest.Size := DPos + Count;  // restore the original size of data
+  Dest.Position := DPos;
+end;
+

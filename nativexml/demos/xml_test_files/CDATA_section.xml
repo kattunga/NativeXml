@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<RxCanada>
+
+  <ChainCode>LCL</ChainCode>
+
+  <StoreIdentifier></StoreIdentifier>
+
+  <DIN>02247163</DIN>
+
+  <OrigRxNum>1000489</OrigRxNum>
+
+  <TxNum>1000489</TxNum>
+
+  <DispQty>30</DispQty>
+
+  <DaysSupply>30</DaysSupply>
+
+  <NewRefill>N</NewRefill>
+
+  <RefillsRemaining>0</RefillsRemaining>
+
+  <TransactionDate>2008-06-23</TransactionDate>
+
+  <BrandName><![CDATA[Crestor]]></BrandName>
+
+  <Strength><![CDATA[20mg]]></Strength>
+
+  <ReportPrinter><![CDATA[Auto Lexmark Optra S 1855 (MS) on COMMGR]]></ReportPrinter>
+
+  <ReportTray><![CDATA[Tray 1]]></ReportTray>
+
+  <Status>COM</Status>
+
+  <Patient>
+
+    <ID>53</ID>
+
+    <LastName><![CDATA[[Test]]]></LastName>
+
+    <FirstName><![CDATA[Billy]]></FirstName>
+
+    <MiddleInitial><![CDATA[]]></MiddleInitial>
+
+    <Title></Title>
+
+    <AddressLine1><![CDATA[6711 mississauga road]]></AddressLine1>
+
+    <AddressLine2><![CDATA[suite 706]]></AddressLine2>
+
+    <City><![CDATA[mississauga]]></City>
+
+    <Province>ON</Province>
+
+    <PostalCode>P0A 1C0</PostalCode>
+
+    <HomePhone>(905) 821-1045</HomePhone>
+
+    <EmailAddress><![CDATA[]]></EmailAddress>
+
+    <BirthDate>1980-01-01</BirthDate>
+
+    <Gender>M</Gender>
+
+  </Patient>
+
+  <Plans>
+
+    <Plan>
+
+      <Sequence>1</Sequence>
+
+      <Type>C</Type>
+
+      <PlanId>0</PlanId>
+
+    </Plan>
+
+  </Plans>
+
+</RxCanada>
+
