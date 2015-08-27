@@ -4425,13 +4425,6 @@ begin
         Exit;
       end;
 
-      // CDATA subnodes could provide the value of the element
-      if SubNode is TsdCData then
-      begin
-        if FValueIndex < 0 then
-          FValueIndex := FNodes.Count - 1;
-      end;
-
       DoNodeLoaded(SubNode);
 
     end else
