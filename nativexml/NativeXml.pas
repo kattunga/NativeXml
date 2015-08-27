@@ -82,7 +82,7 @@ interface
 // define if you want to use tags.
 // A Tag is an additional pointer field of TXmlNode that can be used by the application,
 // but it is not stored in the xml text.
-{.$define USETAGS}
+{$define USETAGS}
 
 // define if you want an additional int64 field FSourcePos in each TXmlNode
 {.$define SOURCEPOS}
@@ -2027,7 +2027,7 @@ var
   cDefaultSortAttributes:          boolean             = False;
   cDefaultSplitSecondDigits:       integer             = 0;
   cDefaultVersionString:           Utf8String          = '1.0';
-  cDefaultXmlFormat:               TXmlFormatType      = xfPreserve;
+  cDefaultXmlFormat:               TXmlFormatType      = xfCompact;
   cDefaultUseLocalBias:            boolean             = False;
   cDefaultWriteOnDefault:          boolean             = True;
 
