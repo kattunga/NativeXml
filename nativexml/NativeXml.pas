@@ -2183,7 +2183,6 @@ implementation
 type
   TAnsiCharArray = array[0..32767] of AnsiChar;
 
-
 { TXmlNode }
 
 procedure TXmlNode.AttributeAdd(const AName, AValue: Utf8String);
@@ -2742,13 +2741,10 @@ var
   A: TsdAttribute;
 begin
   A := GetAttributeByName(AName);
-  if not assigned(A) then
-  begin
-    A := TsdAttribute.Create(TNativeXml(FOwner));
-    A.Name := AName;
-    NodeAdd(A);
-  end;
-  A.Value := Value;
+  if assigned(A) then
+    A.Value := Value
+  else
+    AttributeAdd(AName, Value);
 end;
 
 procedure TXmlNode.SetName(const Value: Utf8String);
