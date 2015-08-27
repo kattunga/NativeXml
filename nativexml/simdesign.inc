@@ -92,4 +92,44 @@
   {$define D15UP}
 {$endif}
 
+// Delphi XE3
+{$ifdef VER240}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
 
+// Delphi XE4
+{$ifdef VER250}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
+
+// Delphi XE5
+{$ifdef VER260}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
+
+// Delphi XE6
+{$ifdef VER270}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
+
+// Delphi XE7
+{$ifdef VER280}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
+
+// Delphi XE8
+{$ifdef VER290}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+{$endif}
