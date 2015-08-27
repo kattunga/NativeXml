@@ -1515,7 +1515,8 @@ type
     // chunk-wise (using 64K chunks). See also LoadFromFile and ReadFromString.
     procedure LoadFromStream(AStream: TStream); virtual;
     // Use New to make a new xml document
-    procedure New; virtual;
+    procedure New(AHasDeclaration, AHasDocType: boolean); overload; virtual;
+    procedure New; overload; virtual;
     // parse substitute content from ANode (usually a TsdCharData). ANode will be
     // removed and the substitute content gets parsed and becomes part of the object model.
     function ParseSubstituteContentFromNode(ANode: TXmlNode; const ASubstitute: Utf8String): TXmlNode;
@@ -5940,6 +5941,11 @@ begin
       ToNode.NodeAdd(Node);
     end;
   end;
+end;
+
+procedure TNativeXml.New(AHasDeclaration, AHasDocType: boolean);
+begin
+  ClearData(AHasDeclaration, AHasDocType, FHasRoot);
 end;
 
 procedure TNativeXml.New;
