@@ -1226,6 +1226,7 @@ type
     function ParseStream(P: TsdXmlParser): TXmlNode; override;
     procedure WriteStream(S: TStream); override;
     function ElementType: TsdElementType; override;
+    procedure SetValueAsCdata(const Value: Utf8String);
   end;
 
   // Node representing an xml declaration, e.g. <?xml version="1.0"?>
@@ -4778,6 +4779,33 @@ end;
 procedure TsdElement.SetName(const Value: Utf8String);
 begin
   FNameID := AddString(Value);
+end;
+
+procedure TsdElement.SetValueAsCdata(const Value: Utf8String);
+var
+  Node: TXmlNode;
+  i, n, v: integer;
+begin
+  n := 0;
+  v := -1;
+  for i := 0 to FNodes.Count-1 do
+    if FNodes[i].ElementType = xeCData then begin
+      Inc(n);
+      v := i;
+    end;
+  if n > 1 then
+    raise Exception.Create('No se puede setear el valor directamente porque hay mas de un subnodo tipo CDATA');
+
+  if v < 0 then
+    begin
+      Node := TsdCData.Create(TNativeXml(FOwner));
+      Node.Value := Value;
+      NodeInsert(FDirectNodeCount, Node);
+      if FValueIndex >= FDirectNodeCount then // si hay un valor chardata lo avanzo
+        Inc(FValueIndex);
+    end
+  else
+    FNodes[v].Value := Value;
 end;
 
 procedure TsdElement.SetValue(const Value: Utf8String);
