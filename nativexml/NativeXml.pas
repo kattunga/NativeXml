@@ -4642,23 +4642,13 @@ begin
 end;
 
 function TsdElement.GetValue: Utf8String;
+var
+  i: integer;
 begin
-  // Return the value of the CharData subnode designated by the parser
-  if (FValueIndex >= 0) and (FValueIndex < FNodes.Count) then
-  begin
-    // chardata value at FValueIndex
-    // This calls TsdCharData.GetValue(),
-    // then TsdCharData.GetCoreValue().
-    Result := FNodes[FValueIndex].Value;
-
-    // BUGFIX: no longer allowed, value is already unnormalized in chardata
-{    // do un-normalisation if mac/windows
-    if GetEolStyle <> esLF then
-      Result := sdUnNormaliseEol(Result, GetEolStyle);}
-
-  end else
-    // default value
-    Result := '';
+  Result := '';
+  for i := 0 to FNodes.Count-1 do
+    if FNodes[i].ElementType in [xeCharData,xeWhiteSpace,xeCData] then
+      Result := Result + FNodes[i].Value;
 end;
 
 procedure TsdElement.ParseIntermediateData(P: TsdXmlParser);
