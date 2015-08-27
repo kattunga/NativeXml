@@ -1,0 +1,14 @@
+*.o
+*.so
+*.ant
+*.nue
+*.dcu
+*.dcp
+*.bpl
+*.map
+*.exe
+*.dll
+*.local
+*.identcache
+__history
+*.~*
