@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>NativeXml.pas</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+NativeXml.pas</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000773.html" CLASS="link">Classes</A>, <A HREF="000774.html" CLASS="link">Functions</A>, <A HREF="000775.html" CLASS="link">Types</A>, <A HREF="000776.html" CLASS="link">Variables</A>, <A HREF="000777.html" CLASS="link">Constants</A></DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+unit NativeXml<P CLASS="topictext">
+This is a small-footprint implementation to read and write XML documents natively from Delpi Object Pascal code. NativeXml has very fast parsing speeds.<P CLASS="topictext">
+You can use this code to read XML documents from files, streams or strings. The load routine generates events that can be used to display load progress on the fly.<P CLASS="topictext">
+Note1: any external encoding (ANSI, UTF16, etc) is converted to an internal encoding that is UTF8 uniquely. NativeXml uses Utf8String as string type internally, and converts from strings with external encoding in the parsing process. When writing, Utf8String strings are converted to the external encoding strings, if the encoding was set beforehand, or defaults to UTF8 if no encoding was set.<P CLASS="topictext">
+Note2: the character data is always normalized inside the document (just a $0A instead of $0D$0A in Windows for end-of-lines). If EolStyle = esWindows, the data is un-normalized before it gets consumed. If you need no un-normalisation (and after all it is non-optimal) you can use EolStyle = esLinux instead.</DIV>
+</DIV>
+<DIV CLASS="notesblock">
+<DIV CLASS="notes">
+<STRONG>Note: </STRONG>this unit is a completely redesigned implementation of legacy NativeXml.</DIV>
+</DIV>
+<DIV CLASS="sectionheader">
+Author</DIV>
+<DIV CLASS="authortextblock">
+<DIV CLASS="authortext">
+Nils Haeck M.Sc. Creation Date: 10nov2010<P CLASS="authortext">
+Contributor(s): Marius Z: devised and helped with the LINQ-like stackable NodeNewXYZ functions in <A HREF="000155.html" CLASS="link">TNativeXml</A> Stefan Glienke: TDateTime methods use GetTimeZoneInformation Hans-Dieter Karl (hdk): added additional Ansi/Wide/Int64/DateTime functions, some fixes<P CLASS="authortext">
+It is NOT allowed under ANY circumstances to publish, alter or copy this code without accepting the license conditions in accompanying LICENSE.txt first!<P CLASS="authortext">
+This software is distributed on an &quot;AS IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or implied.<P CLASS="authortext">
+Please visit http://www.simdesign.nl/xml.html for more information.<P CLASS="authortext">
+Copyright (c) 2004 - 2011 Simdesign B.V. (www.simdesign.nl)</DIV>
+</DIV>
+
+</BODY></HTML>

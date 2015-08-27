@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Example E: Working with UTF8 and unicode encoded files (supporting widestring)</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+Example E: Working with UTF8 and unicode encoded files (supporting widestring)</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000000.html" CLASS="link">Examples of NativeXml usage</A></DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+This example shows how to create and load XML files that should support widestrings.<DIV CLASS="userheader">
+NativeXml internal encoding</DIV>
+Since version 3.20, all internal strings in NativeXml are UTF8 encoded strings. The string type is Utf8String.<DIV CLASS="userheader">
+NativeXml external encoding</DIV>
+Once it is time to save your document, choose the appropriate encoding for the external file or stream (SaveToStream also saves with the right encoding). Set property &quot;ExternalEncoding&quot; to any of these values:<P CLASS="topictext">
+<UL>
+<LI>seAnsi: This will result in a flat ansi-encoded file that uses characters that are only encoded with the codepage defined in ExternalCodepage.<P CLASS="topictext">
+<LI>seUTF16LE: This will result in a unicode file with byte order mark $FF FE. This should be used as a default for unicode files.<P CLASS="topictext">
+<LI>seUTF16BE: This will result in a big-endian unicode file with byte order mark $FE FF.<P CLASS="topictext">
+<LI>seUTF8: This will result in a UTF-8 encoded file (the byte order mark is left out). UTF-8 is more storage friendly when the majority of characters are western/latin. However it uses more space for languages like Chinese or Japanese.</UL>
+<P CLASS="topictext">
+Here's an example on how to set external encoding:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure CreateXML;
+var
+  ADoc: <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  ADoc := <A HREF="000172.html" CLASS="link">TNativeXml.CreateName</A>('Root');
+  try
+
+    // ..add all your creation code here
+
+    // Save to unicode
+    ADoc.ExternalEncoding := seUTF16LE;
+    ADoc.EncodingString := 'UTF-16';
+    ADoc.SaveToFile('c:\temp\test.xml');    
+  finally
+    ADoc.Free;
+  end;
+end;
+</PRE></DIV>
+</DIV>
+<DIV CLASS="userheader">
+Adding widestrings</DIV>
+Adding widestrings to the document is easy. Each node's value can now be set to a widestring using property ValueWide, and widestrings can in general be added using the FromWidestring function.<P CLASS="topictext">
+Here's example code that adds a new node to the root, then sets the name of the node to AName and the value to AValue:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure AddNode(ADoc: TXmlDocument; AName, AValue: widestring);
+begin
+  with ADoc.Root do
+    with NodeNew(FromWidestring(AName)) do
+      ValueWide := AValue;
+end;
+</PRE></DIV>
+</DIV>
+<DIV CLASS="userheader">
+Loading XML files with extended characters</DIV>
+<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+function CreateXMLAndLoadFromFile(AFilename: string): <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  Result := <A HREF="000170.html" CLASS="link">TNativeXml.Create</A>;
+  Result.LoadFromFile(AFilename);  
+end;
+</PRE></DIV>
+</DIV>
+ When reading from a stream (e.g. from a TCP connection), the stream does not always contain the byte order mark (BOM). However, if the stream is unicode, NativeXml will recognise it as such without any help, because the declaration also defines the encoding. Example:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+function CreateXMLAndLoadFromStream(S: TStream): <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  Result := <A HREF="000170.html" CLASS="link">TNativeXml.Create</A>;
+  Result.LoadFromStream(S);  
+end;
+</PRE></DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

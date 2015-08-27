@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Example C: Event driven handling</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+Example C: Event driven handling</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000000.html" CLASS="link">Examples of NativeXml usage</A></DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+This example shows how NativeXml can be used in a SAX-like manner, reading a file sequentially and generating events whenever a node is initiated and loaded.<P CLASS="topictext">
+<P CLASS="topictext">
+Add a TButton (Button3) and a TMemo (Memo1) to your form, then include NativeXml in the uses clause. Next, type the code below in the TButton.OnClick event handler.<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  ADoc: <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  Memo1.Lines.Clear;
+  ADoc := <A HREF="000170.html" CLASS="link">TNativeXml.Create</A>;
+  try
+    ADoc.OnNodeNew    := DoNodeNew;
+    ADoc.OnNodeLoaded := DoNodeLoaded;
+    ADoc.LoadFromFile(Edit1.Text);
+  finally
+    ADoc.Free;
+  end;
+end;
+</PRE></DIV>
+</DIV>
+Type the code below in new TForm1 procedures:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+function TForm1.Indent(ACount: integer): string;
+begin
+  while ACount &gt; 0 do begin
+    Result := Result + '  ';
+    dec(ACount);
+  end;
+end;
+
+procedure TForm1.DoNodeNew(Sender: TObject; Node: <A HREF="000401.html" CLASS="link">TXmlNode</A>);
+begin
+  Memo1.Lines.Add(Format('New   : %sName=%s', [Indent(Node.TreeDepth), Node.Name]));
+end;
+
+procedure TForm1.DoNodeLoaded(Sender: TObject; Node: <A HREF="000401.html" CLASS="link">TXmlNode</A>);
+begin
+  Memo1.Lines.Add(Format('Loaded: %sName=%s, Value=%s', [Indent(Node.TreeDepth), Node.Name, Node.ValueAsString]));
+end;
+</PRE></DIV>
+</DIV>
+Whenever a node is found, the OnNodeNew event is fired, and whenever a node is completely loaded, the OnNodeLoaded event is fired.<P CLASS="topictext">
+<P CLASS="topictext">
+If you do not want to keep a complete copy of the XML file in memory, for example for huge XML files, you can directly remove the node and free its memory. In that case, add the following code to the OnNodeLoaded event:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure TForm1.DoNodeLoaded(Sender: TObject; Node: <A HREF="000401.html" CLASS="link">TXmlNode</A>);
+begin
+  Memo1.Lines.Add(Format('Loaded: Name=%s, Value=%s', [Node.Name, Node.ValueAsString]));
+  if Node.TreeDepth &gt; 0 then begin
+    Memo1.Lines.Add(Format('Deleted: Name=%s', [Node.Name]));
+    Node.Delete;
+  end;
+end;
+</PRE></DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Example D: Creating a simple XML file</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+Example D: Creating a simple XML file</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000000.html" CLASS="link">Examples of NativeXml usage</A></DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+This example shows how to create a simple XML file with one node under the root that has an attribute and a subnode. We will try to create this XML file:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;windows-1252&quot;?&gt;
+&lt;Root&gt;
+  &lt;Customer ID=&quot;123456&quot;&gt;
+    &lt;Name&gt;John Doe&lt;/Name&gt;
+  &lt;/Customer&gt;
+&lt;/Root&gt;
+</PRE></DIV>
+</DIV>
+Here's the code of a procedure that creates this file and saves it in readable format to a filename &quot;C:\test.xml&quot;:<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure CreateXML;
+var
+  ADoc: <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  // Create new document with a rootnode called &quot;Root&quot;
+  ADoc := <A HREF="000172.html" CLASS="link">TNativeXml.CreateName</A>('Root');
+  try
+    // Add a subnode with name &quot;Customer&quot;
+    with ADoc.Root.NodeNew('Customer') do begin
+      // Add an attribute to this subnode
+      WriteAttributeInteger('ID', 123456);
+      // Add subsubnode
+      WriteString('Name', 'John Doe');
+    end;
+
+    // Save the XML in readable format (so with indents)
+    ADoc.XmlFormat := xfReadable;
+    // Save results to a file
+    ADoc.SaveToFile('c:\test.xml');
+  finally
+    ADoc.Free;
+  end;
+end;
+</PRE></DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

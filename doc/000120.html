@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>sdUtf8ToWideBuffer</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+sdUtf8ToWideBuffer</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000072.html" CLASS="link">Unit: NativeXml</A></DIV>
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code"><STRONG>function</STRONG> sdUtf8ToWideBuffer(<STRONG>const</STRONG> Utf8Buf; <STRONG>var</STRONG> WideBuf; ByteCount: integer): integer;</PRE></DIV>
+</DIV>
+<DIV CLASS="sectionheader">
+Description</DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+Convert an UTF8 memory block to Unicode (UTF16 LE). This routine will process Count *bytes* of UTF8 (each character 1-3 bytes) into UTF16 (each char 2 bytes). Therefore, the block at Dst must be at least 2 times the size of Count, since many UTF8 characters consist of just one byte, and are mapped to 2 bytes. The function returns the number of *wide chars* written. Note that the Src block must have an exact number of UTF8 characters in it, if Count doesn't match then the last character will be converted anyway (going past the block boundary!)</DIV>
+</DIV>
+
+</BODY></HTML>

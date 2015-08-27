@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Example B: Access to nodes</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+Example B: Access to nodes</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000000.html" CLASS="link">Examples of NativeXml usage</A></DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+This example shows how to access individual nodes in the XML file. A node can be anything from a normal XML tag, comment, CDATA structure, etcetera. The example shows how to list the first 2 levels of nodes by a simple double loop.<P CLASS="topictext">
+ Add a TEdit, TButton and TMemo to your form, then connect the code below to the OnClick event of the button. Fill in the filename in Edit1 and then click the button, the first two levels of nodes will be listed in the memo control.<P CLASS="topictext">
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code">
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  i, j: integer;
+  ADoc: <A HREF="000155.html" CLASS="link">TNativeXml</A>;
+begin
+  Memo1.Lines.Clear;
+  ADoc := <A HREF="000170.html" CLASS="link">TNativeXml.Create</A>;
+  try
+    ADoc.LoadFromFile(Edit1.Text);
+    if assigned(ADoc.Root) then with ADoc.Root do
+      for i := 0 to NodeCount - 1 do begin
+        Memo1.Lines.Add(Nodes[i].Name);
+        for j := 0 to Nodes[i].NodeCount - 1 do
+          Memo1.Lines.Add(' ' + Nodes[i].Nodes[j].Name);
+      end;
+  finally
+    ADoc.Free;
+  end;
+end;
+</PRE></DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

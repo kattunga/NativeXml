@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>TNativeXml.ExternalEncoding</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <META name="GENERATOR" content="Doc-O-Matic">
+    <LINK rel="STYLESHEET" href="default.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="scripts.js"></SCRIPT>
+</HEAD>
+<BODY CLASS="body">
+<TABLE BORDER="0" BGCOLOR="#AACCFF" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheadertitle">
+NativeXml Help</DIV>
+</TD><TD VALIGN="MIDDLE" ALIGN="LEFT">
+<DIV CLASS="pageheaderlinks">
+<A HREF="content.html" CLASS="link">Content</A> | <A HREF="idx.html" CLASS="link">Index</A> | <A HREF="symref.html" CLASS="link">Reference</A></DIV>
+</TD></TR></TABLE><DIV CLASS="topictitle">
+TNativeXml.ExternalEncoding</DIV>
+<DIV CLASS="topiclinklist">
+<A HREF="000155.html" CLASS="link">TNativeXml</A></DIV>
+<DIV CLASS="codeblock">
+<DIV CLASS="code">
+<PRE CLASS="code"><STRONG>property</STRONG> ExternalEncoding: <A HREF="000353.html" CLASS="link">TsdStringEncoding</A>;</PRE></DIV>
+</DIV>
+<DIV CLASS="sectionheader">
+Description</DIV>
+<DIV CLASS="topictextblock">
+<DIV CLASS="topictext">
+External encoding is valid after loading, and indicates the encoding detected in the external xml document. Internally, all string values are always encoded in UTF8, so if the external stream is Ansi with codepage or UTF16, a conversion is done. When writing to a file/stream, a BOM is generated for the two-byte character encodings (UTF16LE and UUTF16BE). UTF8 uses *no BOM* according to the XML specification. Any conversion is done from UTF8 to external encodings if necessary. You can *set* ExternalEncoding too but only for welldefined encodings (seUTF8, seUTF16LE, seUTF16BE). If you want to use an ansi encoding, then set <A HREF="000180.html" CLASS="link">ExternalCodepage</A>.</DIV>
+</DIV>
+
+</BODY></HTML>
