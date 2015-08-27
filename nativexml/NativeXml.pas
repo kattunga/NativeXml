@@ -1208,6 +1208,7 @@ type
     function FirstNodeByType(AType: TsdElementType): TXmlNode; override;
     function NextSibling(ANode: TXmlNode): TXmlNode; override;
     property NodeClosingStyle: TsdNodeClosingStyle read GetNodeClosingStyle write FNodeClosingStyle;
+    function TextElementsCount: integer;
   end;
 
   // Node representing an xml element.
@@ -4613,6 +4614,16 @@ begin
   Result := TNativeXml(FOwner).NodeClosingStyle;
   if Result = ncDefault then
     Result := FNodeClosingStyle;
+end;
+
+function TsdContainerNode.TextElementsCount: integer;
+var
+  i: integer;
+begin
+  Result := 0;
+  for i := 0 to FNodes.Count-1 do
+    if FNodes[i].ElementType in [xeCharData,xeCData] then
+      Inc(Result);
 end;
 
 { TsdElement }
