@@ -4799,7 +4799,7 @@ var
   i, n: integer;
 begin
 
-  // c_pradelli, no podemos setear el valor de esta manera cuando hay mas de un chardata o hay otro tipo de subnodos
+  // check to see if there are text subnodes
   n := 0;
   for i := 0 to FNodes.Count-1 do
     if FNodes[i].ElementType = xeCharData then
@@ -4807,13 +4807,12 @@ begin
     else if FNodes[i].ElementType in [xeWhiteSpace,xeCData] then
       n := MaxInt;
   if n > 1 then
-    raise Exception.Create('No se puede setear el valor directamente porque hay mutiples nodos de datos');
-  //
+    raise Exception.Create('Can not set text value when there are several text subnodes');
 
-  if Length(Value) > 0 then
+  // value that will be set.
+  Res := sdTrim(Value);
+  if Length(Res) > 0 then
   begin
-    // value that will be set.
-    Res := Value;
 
     // add or update a value
     if FValueIndex < 0 then
@@ -6052,8 +6051,6 @@ begin
         // give the parser the codepage from encoding in the declaration.
         // The .SetCodePage setter cares for the re-encoding of the chunk.
         DeclarationEncodingString := TsdDeclaration(Node).Encoding;
-        Parser.Encoding := sdCharsetToStringEncoding(DeclarationEncodingString);
-        Parser.CodePage := sdCharsetToCodePage(DeclarationEncodingString);
 
         DoDebugOut(Self, wsInfo, Format('declaration with encoding "%s" and codepage %d',
           [TsdDeclaration(Node).Encoding, Parser.CodePage]));
@@ -6113,6 +6110,9 @@ begin
     // finally, free the single tag names list
     FreeAndNil(FSingleTagNames);
   end;
+
+  Parser.Encoding := sdCharsetToStringEncoding(DeclarationEncodingString);
+  Parser.CodePage := sdCharsetToCodePage(DeclarationEncodingString);
 end;
 
 function TNativeXml.ParseSubstituteContentFromNode(ANode: TXmlNode; const ASubstitute: Utf8String): TXmlNode;
