@@ -1072,6 +1072,8 @@ type
     // sort the child nodes based on a compare function. If Compare = nil, just
     // alphabetical compare is used.
     procedure SortChildNodes(Compare: TXmlNodeCompareFunction);
+
+    function AttributesAstring: Utf8String;
   end;
 
   // List of nodes
@@ -3831,6 +3833,21 @@ begin
   {$else SOURCEPOS}
   Result := 0;
   {$endif SOURCEPOS}
+end;
+
+function TXmlNode.AttributesAstring: Utf8String;
+var
+  i: integer;
+  A: TsdAttribute;
+begin
+  Result := '';
+  for i := 0 to GetAttributeCount - 1 do
+  begin
+    A := GetAttributes(i);
+    if Result <> '' then
+      Result := Result+' ';
+    Result := Result+A.Name+'="'+A.Value+'"';
+  end;
 end;
 
 { TsdCharData }
