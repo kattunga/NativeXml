@@ -3872,7 +3872,7 @@ begin
   Result := GetString(FValueID);
 end;
 
-function TsdCharData.GetPlatformValue: Utf8String; 
+function TsdCharData.GetPlatformValue: Utf8String;
 begin
   Result := sdUnNormaliseEol(GetCoreValue, GetEolStyle);
 end;
@@ -3908,7 +3908,7 @@ end;
 
 procedure TsdCharData.WriteStream(S: TStream);
 begin
-  // write the chardata: the platform value is the 
+  // write the chardata: the platform value is the
   sdWriteToStream(S, GetPlatformValue);
 //  sdWriteToStream(S, GetCoreValue);
 end;
@@ -4111,6 +4111,10 @@ begin
     exit;
   end;
   NodeInsert(FDirectNodeCount, AAttribute);
+
+  if FValueIndex >= FDirectNodeCount then
+    Inc(FValueIndex);
+
   inc(FDirectNodeCount);
 end;
 
