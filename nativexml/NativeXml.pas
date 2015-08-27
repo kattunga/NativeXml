@@ -7909,6 +7909,17 @@ end;
 { Utility Functions }
 
 {$ifdef MSWINDOWS}
+{$ifdef D16UP}
+function sdWideToUtf8(const W: UnicodeString): Utf8String;
+begin
+  Result := System.UTF8Encode(W);
+end;
+
+function sdUtf8ToWide(const U: Utf8String): UnicodeString;
+begin
+  Result := System.UTF8Decode(U);
+end;
+{$else}
 function sdWideToUtf8(const W: UnicodeString): Utf8String;
 var
   WideCount, Utf8Count: integer;
@@ -7936,6 +7947,7 @@ begin
   WideCount := sdUtf8ToWideBuffer(U[1], Result[1], Utf8Count);
   SetLength(Result, WideCount);
 end;
+{$endif}
 {$else}
 // FPC functions
 function sdWideToUtf8(const W: UnicodeString): Utf8String;

@@ -90,6 +90,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE3
@@ -97,6 +98,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE4
@@ -104,6 +106,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE5
@@ -111,6 +114,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE6
@@ -118,6 +122,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE7
@@ -125,6 +130,7 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
 
 // Delphi XE8
@@ -132,4 +138,5 @@
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
+  {$define D16UP}
 {$endif}
