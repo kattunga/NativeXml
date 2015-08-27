@@ -1966,7 +1966,7 @@ const
   cBomInfoIdxUTF16LE = 7;
 
   cElementTypeNames: array[TsdElementType] of Utf8String =
-    ('Element',  'Attribute', 'CharData', 'Comment', 'CData', 'ConditionalSection',
+    ('Element',  'Attribute', 'Text', 'Comment', 'CData', 'ConditionalSection',
      'Declaration', 'Stylesheet', 'DocType', 'DtdElement', 'DtdAttList', 'DtdEntity',
      'DtdNotation', 'Instruction', 'WhiteSpace', 'QuotedText', 'EndTag', 'Error');
 
