@@ -4796,7 +4796,20 @@ procedure TsdElement.SetValue(const Value: Utf8String);
 var
   Res: Utf8String;
   Node: TXmlNode;
+  i, n: integer;
 begin
+
+  // c_pradelli, no podemos setear el valor de esta manera cuando hay mas de un chardata o hay otro tipo de subnodos
+  n := 0;
+  for i := 0 to FNodes.Count-1 do
+    if FNodes[i].ElementType = xeCharData then
+      Inc(n)
+    else if FNodes[i].ElementType in [xeWhiteSpace,xeCData] then
+      n := MaxInt;
+  if n > 1 then
+    raise Exception.Create('No se puede setear el valor directamente porque hay mutiples nodos de datos');
+  //
+
   if Length(Value) > 0 then
   begin
     // value that will be set.
