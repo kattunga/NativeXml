@@ -140,3 +140,11 @@
   {$define D15UP}
   {$define D16UP}
 {$endif}
+
+// Delphi 10
+{$ifdef VER300}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+  {$define D16UP}
+{$endif}
