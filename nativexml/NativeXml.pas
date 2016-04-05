@@ -4015,7 +4015,7 @@ end;
 procedure TsdAttribute.SetValue(const Value: Utf8String);
 begin
   // FCoreValue is directly created in TsdAttribute.Create, so safe
-  FCoreValue.SetCoreValue(sdEscapeString(Value));
+  FCoreValue.SetCoreValue(sdEscapeString(sdNormaliseEol(Value)));
 end;
 
 procedure TsdAttribute.WriteStream(S: TStream);
@@ -6934,7 +6934,8 @@ begin
   NodeClass := cNodeClass[AElementType];
   Result := NodeClass.Create(Self);
   Result.Name := AName;
-  Result.Value := AValue;
+  if AValue <> '' then
+    Result.Value := AValue;
 
   Result.AttributesAdd(Attributes);
   Result.NodesAdd(SubNodes);
