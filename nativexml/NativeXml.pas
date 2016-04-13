@@ -3987,7 +3987,7 @@ end;
 function TsdAttribute.GetValue: Utf8String;
 begin
   if assigned(FCoreValue) then
-    Result := sdReplaceString(FCoreValue.GetCoreValue)
+    Result := sdReplaceString(sdUnNormaliseEol(FCoreValue.GetCoreValue, GetEolStyle))
   else
     Result := '';
 end;
@@ -4794,7 +4794,6 @@ end;
 
 procedure TsdElement.SetValue(const Value: Utf8String);
 var
-  Res: Utf8String;
   Node: TXmlNode;
   i, n: integer;
 begin
@@ -4810,8 +4809,7 @@ begin
     raise Exception.Create('Can not set text value when there are several text subnodes');
 
   // value that will be set.
-  Res := sdTrim(Value);
-  if Length(Res) > 0 then
+  if Length(Value) > 0 then
   begin
 
     // add or update a value
@@ -4820,7 +4818,7 @@ begin
 
       // we do not have a value node, so we will add it after FDirectNodeCount
       Node := TsdCharData.Create(TNativeXml(FOwner));
-      Node.Value := Res;
+      Node.Value := Value;
       NodeInsert(FDirectNodeCount, Node);
       FValueIndex := FDirectNodeCount;
 
@@ -4828,7 +4826,7 @@ begin
     begin
 
       // just update the value
-      FNodes[FValueIndex].Value := Res;
+      FNodes[FValueIndex].Value := Value;
 
     end;
   end else
@@ -8598,6 +8596,13 @@ function sdUnNormaliseEol(const S: Utf8String; const EolStyle: TsdEolStyle): Utf
 var
   i, j, L, IntervalCount: integer;
 begin
+
+  // if not normalize exit now;
+  if EolStyle = esLF then begin
+    Result := S;
+    Exit;
+  end;
+
   // determine interval count
   L := Length(S);
   IntervalCount := 0;
