@@ -4665,16 +4665,7 @@ begin
   SourcePos := P.Position;
   {$endif SOURCEPOS}
 
-  S := P.ReadStringUntilChar('<');
-  CharDataString := sdTrim(S, PreString, PostString);
-
-  if GetPreserveWhiteSpace and (Length(PreString) > 0) then
-  begin
-    WhiteSpaceNode := TsdWhiteSpace.Create(TNativeXml(FOwner));
-    WhiteSpaceNode.FValueID := AddString(PreString);
-    NodeAdd(WhiteSpaceNode);
-  end;
-
+  CharDataString := P.ReadStringUntilChar('<');
   if length(CharDataString) > 0 then
   begin
     // Insert CharData node
@@ -4694,13 +4685,6 @@ begin
 
     DoNodeNew(CharDataNode);
     DoNodeLoaded(CharDataNode);
-  end;
-
-  if GetPreserveWhiteSpace and (Length(PostString) > 0) then
-  begin
-    WhiteSpaceNode := TsdWhiteSpace.Create(TNativeXml(FOwner));
-    WhiteSpaceNode.FValueID := AddString(PostString);
-    NodeAdd(WhiteSpaceNode);
   end;
 end;
 
