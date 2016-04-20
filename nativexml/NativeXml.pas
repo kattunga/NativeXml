@@ -2050,6 +2050,7 @@ function sdAnsiToUtf8(const A: AnsiString; ACodePage: integer): Utf8String;
 // Convert Utf8 to Ansi string
 function sdUtf8ToAnsi(const U: Utf8String; ACodePage: integer): AnsiString;
 
+function sdRigthTrim(const S: Utf8String): Utf8String;
 function sdTrim(const S: Utf8String): Utf8String; overload;
 function sdTrim(const S: Utf8String; var IsTrimmed: boolean): Utf8String; overload;
 function sdTrim(const S: Utf8String; var PreString, PostString: Utf8String): Utf8String; overload;
@@ -4665,7 +4666,8 @@ begin
   SourcePos := P.Position;
   {$endif SOURCEPOS}
 
-  CharDataString := P.ReadStringUntilChar('<');
+  s := P.ReadStringUntilChar('<');
+  CharDataString := sdRigthTrim(s);
   if length(CharDataString) > 0 then
   begin
     // Insert CharData node
@@ -4778,6 +4780,7 @@ end;
 
 procedure TsdElement.SetValue(const Value: Utf8String);
 var
+  Res: Utf8String;
   Node: TXmlNode;
   i, n: integer;
 begin
@@ -4793,7 +4796,8 @@ begin
     raise Exception.Create('Can not set text value when there are several text subnodes');
 
   // value that will be set.
-  if Length(Value) > 0 then
+  Res := sdRigthTrim(Value);
+  if Length(Res) > 0 then
   begin
 
     // add or update a value
@@ -4802,7 +4806,7 @@ begin
 
       // we do not have a value node, so we will add it after FDirectNodeCount
       Node := TsdCharData.Create(TNativeXml(FOwner));
-      Node.Value := Value;
+      Node.Value := Res;
       NodeInsert(FDirectNodeCount, Node);
       FValueIndex := FDirectNodeCount;
 
@@ -8454,6 +8458,16 @@ begin
   for i := 1 to Length(AValue) do
     if AValue[i] = ',' then
       Result[i] := '.';
+end;
+
+function sdRigthTrim(const S: Utf8String): Utf8String;
+var
+  i: Integer;
+begin
+  i := Length(S);
+  while (i > 0) and (S[i] <= ' ') do
+    Dec(i);
+  Result := Copy(S, 1, i);
 end;
 
 function sdTrim(const S: Utf8String): Utf8String;
