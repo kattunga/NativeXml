@@ -149,8 +149,16 @@
   {$define D16UP}
 {$endif}
 
-// Delphi 10.1
+// Delphi 10.1 Berlin
 {$ifdef VER310}
+  {$define D7UP}
+  {$define D10UP}
+  {$define D15UP}
+  {$define D16UP}
+{$endif}
+
+// Delphi 10.2 Tokyo
+{$ifdef VER320}
   {$define D7UP}
   {$define D10UP}
   {$define D15UP}
