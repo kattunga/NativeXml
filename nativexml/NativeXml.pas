@@ -7228,9 +7228,9 @@ var
   Node: TXmlNode;
   CharData: TsdCharData;
   SubstituteText: Utf8String;
-  {$ifdef D5UP}
+  {$ifndef D7UP}
   Src: PChar;
-  {$endif D5UP}
+  {$endif D7UP}
 begin
   CharDataCount := 0;
   Result := 0; // ReferencesCount
