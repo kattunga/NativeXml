@@ -749,6 +749,9 @@ type
     // function works recursively, using the depthfirst method.
     function NodeByAttributeValue(const NodeName, AttribName, AttribValue: Utf8String;
       ShouldRecurse: boolean = True): TXmlNode; overload;
+    // multiple attribyte
+    function NodeByAttributeValue(const NodeName, AttribName, AttribValue: array of Utf8String;
+      ShouldRecurse: boolean = True): TXmlNode; overload;
     {$ifdef D7UP}
     function NodeByAttributeValue(const NodeName, AttribName: Utf8String;
       const AttribValue: UnicodeString; ShouldRecurse: boolean = True): TXmlNode; overload;
@@ -805,7 +808,8 @@ type
     // function, this function will search the whole subnode tree. If you use
     // a TsdNodeList for the AList parameter, you don't need to cast the list
     // items to TXmlNode.
-    procedure FindNodes(const NodeName: Utf8String; const AList: TList); virtual;
+    procedure FindNodes(const NodeName: Utf8String; const AList: TList); overload; virtual;
+    procedure FindNodes(const NodeName: array of Utf8String; const AList: TList); overload; virtual;
     // Iterates the next sibling of Node
     function NextSibling(ANode: TXmlNode): TXmlNode; virtual;
     // Return the first subnode with AType, or nil if none
@@ -3535,6 +3539,33 @@ begin
   end;
 end;
 
+function TXmlNode.NodeByAttributeValue(const NodeName, AttribName, AttribValue: array of Utf8String;
+  ShouldRecurse: boolean = True): TXmlNode;
+var
+  i,j: integer;
+  Node: TXmlNode;
+begin
+  Result := nil;
+  // Find all nodes that are potential results
+  for i := 0 to NodeCount - 1 do
+  begin
+    Node := Nodes[i];
+    for j:= Low(NodeName) to High(NodeName) do
+    if (UTF8CompareText(Node.Name, NodeName[j]) = 0) and
+        Node.HasAttribute(AttribName[j]) and
+       (UTF8CompareText(Node.AttributeValueByName[AttribName[j]], AttribValue[j]) = 0) then
+    begin
+      Result := Node;
+      exit;
+    end;
+    // Recursive call
+    if ShouldRecurse then
+      Result := Node.NodeByAttributeValue(NodeName, AttribName, AttribValue, True);
+    if assigned(Result) then
+      exit;
+  end;
+end;
+
 function TXmlNode.HasAttribute(const AName: Utf8String): boolean;
 var
   i: integer;
@@ -3634,6 +3665,28 @@ procedure TXmlNode.FindNodes(const NodeName: Utf8String; const AList: TList);
       SubNode := ANode.Nodes[i];
       if SubNode.CompareNodeName(NodeName) = 0 then
         AList.Add(SubNode);
+      FindNodesRecursive(SubNode, AList);
+    end;
+  end;
+// main
+begin
+  AList.Clear;
+  FindNodesRecursive(Self, AList);
+end;
+
+procedure TXmlNode.FindNodes(const NodeName: array of Utf8String; const AList: TList);
+  // local
+  procedure FindNodesRecursive(ANode: TXmlNode; AList: TList);
+  var
+    i,j: integer;
+    SubNode: TXmlNode;
+  begin
+    for i := 0 to ANode.NodeCount - 1 do
+    begin
+      SubNode := ANode.Nodes[i];
+      for j:=Low(NodeName) to High(NodeName) do
+        if SubNode.CompareNodeName(NodeName[j]) = 0 then
+          AList.Add(SubNode);
       FindNodesRecursive(SubNode, AList);
     end;
   end;
@@ -4860,7 +4913,7 @@ begin
       // due to optional chardatas after the parent we use these "if"s
       if (i = FDirectNodeCount) and not (SubNode is TsdCharData) then
       begin
-        sdStreamWriteString(S, GetEndOfLine);
+        sdStreamWriteString(S, SubNode.GetEndOfLine); // BUGFIX
       end;
       if (i > FDirectNodeCount) and (SubNode is TsdCharData) and HasSubElements then
       begin
@@ -4871,7 +4924,7 @@ begin
         SubNode.WriteStream(S);
 
       if HasSubElements and (SubNode is TsdCharData) then
-        sdStreamWriteString(S, GetEndOfLine);
+        sdStreamWriteString(S, SubNode.GetEndOfLine); // BUGFIX
     end;
 
     // endtag
