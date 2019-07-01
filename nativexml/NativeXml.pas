@@ -70,7 +70,7 @@ interface
 {$i simdesign.inc}
 
 // define if you want to include the Graphics unit, and graphics-related properties.
-{.$define USEGRAPHICS}
+{$define USEGRAPHICS}
 
 // define if you want to include zlib (=deflate) compression in binary xml.
 {.$define USEZLIB}
@@ -3435,7 +3435,7 @@ end;
 procedure TXmlNode.WriteColor(const AName: UTF8String; AValue, ADefault: TColor);
 begin
   if WriteOnDefault or (AValue <> ADefault) then
-    WriteHex(AName, ColorToRGB(AValue), 8, 0);
+    WriteHex(AName, ColorToRGB(AValue), 8, ADefault);
 end;
 {$endif USEGRAPHICS}
 
