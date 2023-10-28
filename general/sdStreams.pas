@@ -138,7 +138,7 @@ begin
     begin
       if Result > Count then
         Result := Count;
-      Move(Pointer(Longint(FMemory) + FPosition)^, Buffer, Result);
+      Move(Pointer(PByte(FMemory) + FPosition)^, Buffer, Result);
       Inc(FPosition, Result);
       Exit;
     end;
@@ -215,7 +215,7 @@ begin
           SetCapacity(NewPos);
         FSize := NewPos;
       end;
-      System.Move(Buffer, Pointer(Longint(FMemory) + FPosition)^, Count);
+      System.Move(Buffer, Pointer(PByte(FMemory) + FPosition)^, Count);
       FPosition := NewPos;
       Result := Count;
       Exit;
